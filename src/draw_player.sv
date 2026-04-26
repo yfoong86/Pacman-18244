@@ -12,10 +12,10 @@ module draw_player
         
     logic [9:0] player_size; // player size
 
-    assign player_size = 16'd50;
+    assign player_size = 16'd20;
 
-    assign player_x = 16'd200;
-    assign player_y = 16'd300;
+    assign player_x = 16'd300;
+    assign player_y = 16'd400;
 
     // always_ff @(posedge clk, negedge rst_n) begin
     //     if (~rst_n) begin
@@ -50,7 +50,11 @@ module draw_player
     // end
 
     always_comb begin
-        if (((row < (player_x + player_size))) && (col < (player_y + player_size))) {red, green, blue} = {2'b11, 2'b11, 2'b11};
+        // if ((row < 16'd100) && (col < 16'd100)) {red, green, blue} = {2'b00, 2'b00, 2'b11};
+        // else {red, green, blue} = {2'b00, 2'b00, 2'b00};
+
+        if (((row < (player_x + player_size)) && (row > (player_x - player_size))) && 
+            (col < (player_y + player_size)) && (col > (player_y - player_size))) {red, green, blue} = {2'b00, 2'b00, 2'b11};
         else {red, green, blue} = {2'b00, 2'b00, 2'b00};
     end
     

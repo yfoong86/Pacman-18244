@@ -23,7 +23,7 @@ module ChipInterface (
 
     logic [1:0] red, green, blue;
 
-    assign en_cond = ((row == 525) && (col == 800));
+    assign en_cond = ((row == 600) && (col == 800));
 
     //Player position logic
     draw_player dp(.clk, .rst_n,
