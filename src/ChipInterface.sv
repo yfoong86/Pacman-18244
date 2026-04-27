@@ -1,5 +1,5 @@
 module ChipInterface (
-    input logic clk, rst_n,
+    input logic clk, btn_rst,
     input logic btn_left, btn_right, btn_up, btn_down,
     output logic vga_r0, vga_r1,
     output logic vga_g0, vga_g1,
@@ -23,12 +23,18 @@ module ChipInterface (
 
     logic [1:0] red, green, blue;
 
-    assign en_cond = ((row == 600) && (col == 800));
+    Synchronizer s0 (.clock(clk), .async(btn_rst), .sync(rst_n)),
+                 s1 (.clock(clk), .async(btn_left), .sync(left)),
+                 s2 (.clock(clk), .async(btn_right), .sync(right)),
+                 s3 (.clock(clk), .async(btn_up), .sync(up)),
+                 s4 (.clock(clk), .async(btn_down), .sync(down));
+
+    assign en_cond = ((row == 16'd524) && (col == 16'd799));
 
     //Player position logic
     draw_player dp(.clk, .rst_n,
                    .row, .col,
-                   .btn_left, .btn_right, .btn_up, .btn_down,
+                   .left, .right, .up, .down,
                    .red(red_p), .green(green_p), .blue(blue_p),
                    .en_cond,
                    .player_x, .player_y);
