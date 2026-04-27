@@ -50,10 +50,7 @@ module ChipInterface (
     assign red = red_p;
     assign green = green_p;
     assign blue = blue_p;
-    // always_comb begin
-    //     if (row < 200 && col < 300) {red, green, blue} = {2'b11, 2'b0, 2'b0};
-    //     else {red, green, blue} = {2'b00, 2'b0, 2'b11};
-    // end
+
     horizontal_counter h_counter(.*);
     vertical_counter v_counter(.*);
 
