@@ -35,9 +35,18 @@ module draw_basic_map (
 
 
     always_comb begin
+        //border
+        if (row < (35 + width)) {red, green, blue} = {2'b11, 2'b11, 2'b11};
+
+        else if (row > (515 - width)) {red, green, blue} = {2'b11, 2'b11, 2'b11};
+
+        else if (col < (144 + width)) {red, green, blue} = {2'b11, 2'b11, 2'b11};
+
+        else if (col > (785 - width)) {red, green, blue} = {2'b11, 2'b11, 2'b11};
+
         //line1
-        if (((col < (col_coords[1] + col_size)) && (col > col_coords[1])) && 
-            (row < (row_coords[2] + width)) && (row > row_coords[2])) {red, green, blue} = {2'b11, 2'b11, 2'b11};
+        else if (((col < (col_coords[1] + col_size)) && (col > col_coords[1])) && 
+                 (row < (row_coords[2] + width)) && (row > row_coords[2])) {red, green, blue} = {2'b11, 2'b11, 2'b11};
 
         //line2
         else if (((col < (col_coords[2] + width)) && (col > col_coords[2])) && 

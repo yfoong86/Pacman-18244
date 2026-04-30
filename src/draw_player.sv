@@ -12,23 +12,23 @@ module draw_player
 
     always_ff @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
-            player_x <= 16'd150;
-            player_y <= 16'd50;
+            player_x <= 16'd160;
+            player_y <= 16'd55;
         end
         else if (en_cond) begin
             //x dir
-            if (left && (player_x > (143 + player_size))) begin
+            if (left && (player_x > (144 + player_size))) begin
                 player_x <= player_x - 16'd5;
             end
-            else if (right && (player_x < (784 - player_size))) begin
+            else if (right && (player_x < (775 - player_size))) begin
                 player_x <= player_x + 16'd5;
             end
             
             //y dir
-            if (up && (player_y > (34 + player_size))) begin
+            if (up && (player_y > (33 + player_size))) begin
                 player_y <= player_y - 16'd5;
             end
-            else if (down && (player_y < (515 - player_size))) begin
+            else if (down && (player_y < (505 - player_size))) begin
                 player_y <= player_y + 16'd5;
             end
         end
