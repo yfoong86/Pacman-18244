@@ -10,18 +10,22 @@ module ChipInterface (
     logic [7:0] score;
     logic       blank;
 
+    //logic for positions
     logic [15:0] player_x, player_y;
     logic [15:0] ghost_x, ghost_y;
-
-    logic [1:0] red_p, green_p, blue_p;
-    logic [1:0] red_g, green_g, blue_g;
 
     //logic for vga
     logic [15:0] col, row;
     logic enable_V_counter;
     logic en_cond;
 
+    logic [1:0] red_m, green_m, blue_m;
+    logic [1:0] red_p, green_p, blue_p;
+    logic [1:0] red_g, green_g, blue_g;
     logic [1:0] red, green, blue;
+
+    //logic for collisions
+    logic collision_left, collision_right, collision_up, collision_down;
 
     Synchronizer s0 (.clock(clk), .async(btn_rst), .sync(rst_n)),
                  s1 (.clock(clk), .async(btn_left), .sync(left)),
@@ -39,6 +43,19 @@ module ChipInterface (
                    .en_cond,
                    .player_x, .player_y);
 
+    draw_basic_map dm0 (.clk, .rst_n,
+                        .row, .col,
+                        .red(red_m), .green(green_m), .blue(blue_m),
+                        .en_cond,
+                        .player_x, .player_y,
+                        .collision_left, .collision_right,
+                        .collision_up, .collision_down);
+
+    // draw_map dm(.clk, .rst_n,
+    //             .row, .col,
+    //             .red(red_m), .green(green_m), .blue(blue_m),
+    //             .en_cond);
+
     //Ghost position logic
     // draw_ghost (.clk, .rst_n, .dflt,
     //             .row, .col,
@@ -47,9 +64,9 @@ module ChipInterface (
     //             .en_cond,
     //             .ghost_x, .ghost_y);
 
-    assign red = red_p;
-    assign green = green_p;
-    assign blue = blue_p;
+    assign red = red_p || red_m;
+    assign green = green_p || green_m;
+    assign blue = blue_p || blue_m;
 
     horizontal_counter h_counter(.*);
     vertical_counter v_counter(.*);

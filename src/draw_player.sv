@@ -12,8 +12,8 @@ module draw_player
 
     always_ff @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
-            player_x <= 16'd300;
-            player_y <= 16'd400;
+            player_x <= 16'd150;
+            player_y <= 16'd50;
         end
         else if (en_cond) begin
             //x dir
