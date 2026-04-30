@@ -11,7 +11,7 @@ module ChipInterface (
     logic       blank;
 
     //logic for positions
-    logic [15:0] player_x, player_y;
+    logic [15:0] nplayer_x, nplayer_y;
     logic [15:0] ghost_x, ghost_y;
 
     //logic for vga
@@ -25,7 +25,7 @@ module ChipInterface (
     logic [1:0] red, green, blue;
 
     //logic for collisions
-    logic collision_left, collision_right, collision_up, collision_down;
+    logic collision;
 
     Synchronizer s0 (.clock(clk), .async(btn_rst), .sync(rst_n)),
                  s1 (.clock(clk), .async(btn_left), .sync(left)),
@@ -41,15 +41,15 @@ module ChipInterface (
                    .left, .right, .up, .down,
                    .red(red_p), .green(green_p), .blue(blue_p),
                    .en_cond,
-                   .player_x, .player_y);
+                   .collision,
+                   .nplayer_x, .nplayer_y);
 
     draw_basic_map dm0 (.clk, .rst_n,
                         .row, .col,
                         .red(red_m), .green(green_m), .blue(blue_m),
                         .en_cond,
-                        .player_x, .player_y,
-                        .collision_left, .collision_right,
-                        .collision_up, .collision_down);
+                        .nplayer_x, .nplayer_y,
+                        .collision);
 
     // draw_map dm(.clk, .rst_n,
     //             .row, .col,
