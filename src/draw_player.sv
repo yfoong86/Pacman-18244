@@ -49,7 +49,7 @@ module draw_player
 
     always_comb begin
         if (((col < (player_x + player_size)) && (col > player_x)) && 
-            (row < (player_y + player_size)) && (row > player_y)) {red, green, blue} = {2'b00, 2'b00, 2'b11};
+            (row < (player_y + player_size)) && (row > player_y)) {red, green, blue} = {2'b11, 2'b11, 2'b00};
         else {red, green, blue} = {2'b00, 2'b00, 2'b00};
     end
     

@@ -12,7 +12,7 @@ module draw_basic_map (
     logic [7:0][15:0] col_coords;
 
     logic [15:0] width, player_size;
-    logic [15:0] row_size, row_size2, col_size, col_size2;
+    logic [15:0] row_size, row_size2, col_size, col_size2, col_size4;
     
     assign player_size = 15;
     assign width = 10;
@@ -20,6 +20,7 @@ module draw_basic_map (
     assign row_size2 = 192;
     assign col_size = 80;
     assign col_size2 = 160;
+    assign col_size4 = 320;
 
     genvar i, j;
     generate
@@ -71,7 +72,7 @@ module draw_basic_map (
                  (row < (row_coords[3])) && (row > row_coords[3] - row_size)) {red, green, blue} = {2'b11, 2'b11, 2'b11};
 
         //line7
-        else if (((col < (col_coords[4] + col_size)) && (col > col_coords[4])) && 
+        else if (((col < (col_coords[2] + col_size4)) && (col > col_coords[2])) && 
             (row < (row_coords[3] + width)) && (row > row_coords[3])) {red, green, blue} = {2'b11, 2'b11, 2'b11};
 
         //line8
@@ -79,7 +80,7 @@ module draw_basic_map (
                  (row < (row_coords[4])) && (row > row_coords[4] - row_size)) {red, green, blue} = {2'b11, 2'b11, 2'b11};
 
         //line9
-        else if (((col < (col_coords[5] + col_size)) && (col > col_coords[5])) && 
+        else if (((col < (col_coords[5] + col_size2)) && (col > col_coords[5])) && 
             (row < (row_coords[4] + width)) && (row > row_coords[4])) {red, green, blue} = {2'b11, 2'b11, 2'b11};
 
         //line10
@@ -122,7 +123,7 @@ module draw_basic_map (
                  (nplayer_y < (row_coords[3])) && (nplayer_y > (row_coords[3] - row_size - player_size))) collision = 1'b1;
 
         //line7
-        else if (((nplayer_x < (col_coords[4] + col_size)) && (nplayer_x > (col_coords[4] - player_size))) && 
+        else if (((nplayer_x < (col_coords[2] + col_size4)) && (nplayer_x > (col_coords[2] - player_size))) && 
                  (nplayer_y < (row_coords[3] + width)) && (nplayer_y > (row_coords[3] - player_size))) collision = 1'b1;
 
         //line8
@@ -130,7 +131,7 @@ module draw_basic_map (
                  (nplayer_y < (row_coords[4])) && (nplayer_y > (row_coords[4] - row_size - player_size))) collision = 1'b1;
 
         //line9
-        else if (((nplayer_x < (col_coords[5] + col_size)) && (nplayer_x > (col_coords[5] - player_size))) && 
+        else if (((nplayer_x < (col_coords[5] + col_size2)) && (nplayer_x > (col_coords[5] - player_size))) && 
                  (nplayer_y < (row_coords[4] + width)) && (nplayer_y > (row_coords[4] - player_size))) collision = 1'b1;
 
         //line10
