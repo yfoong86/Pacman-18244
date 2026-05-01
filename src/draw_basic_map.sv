@@ -4,8 +4,9 @@ module draw_basic_map (
     input logic [15:0] row, col,
     input logic en_cond,
     input logic [15:0] nplayer_x, nplayer_y,
+    input logic [15:0] nghost_x, nghost_y,
     output logic [1:0] red, green, blue,
-    output logic collision);
+    output logic collision, collision_g);
 
     //variable to keep track of coordinates of tiles
     logic [4:0][15:0] row_coords;
@@ -94,7 +95,7 @@ module draw_basic_map (
         else {red, green, blue} = {2'b00, 2'b00, 2'b00};
     end
 
-    //collision detection with map
+    //collision detection of player with map
     always_comb begin
         collision = 1'b0;
 
@@ -141,6 +142,56 @@ module draw_basic_map (
         //line11
         else if (((nplayer_x < (col_coords[5] + width)) && (nplayer_x > (col_coords[5] - player_size))) && 
                  (nplayer_y < (row_coords[2])) && (nplayer_y > (row_coords[2] - row_size - player_size))) collision = 1'b1;
+
+    end
+
+    //collision detection of ghost with map
+    always_comb begin
+        collision_g = 1'b0;
+
+        //line1
+        if (((nghost_x < (col_coords[1] + col_size)) && (nghost_x > (col_coords[1] - player_size))) && 
+             (nghost_y < (row_coords[2] + width)) && (nghost_y > (row_coords[2] - player_size))) collision_g = 1'b1;
+
+        //line2
+        else if (((nghost_x < (col_coords[2] + width)) && (nghost_x > (col_coords[2] - player_size))) && 
+                 (nghost_y < (row_coords[2] + width)) && (nghost_y > (row_coords[2] + width - row_size - player_size))) collision_g = 1'b1;
+
+        //line3
+        else if (((nghost_x < (col_coords[2] + col_size2)) && (nghost_x > (col_coords[2] - player_size))) && 
+                 (nghost_y < (row_coords[1] + width)) && (nghost_y > (row_coords[1] - player_size))) collision_g = 1'b1;
+
+        //line4
+        else if (((nghost_x < (col_coords[1] + width)) && (nghost_x > (col_coords[1] - player_size))) && 
+                 (nghost_y < (row_coords[4])) && (nghost_y > (row_coords[4] - row_size - player_size))) collision_g = 1'b1;
+
+        //line5
+        else if (((nghost_x < (col_coords[1] + col_size2)) && (nghost_x > (col_coords[1] - player_size))) && 
+                 (nghost_y < (row_coords[4] + width)) && (nghost_y > (row_coords[4] - player_size))) collision_g = 1'b1;
+
+        //line6
+        else if (((nghost_x < (col_coords[4] + width)) && (nghost_x > (col_coords[4] - player_size))) && 
+                 (nghost_y < (row_coords[3])) && (nghost_y > (row_coords[3] - row_size - player_size))) collision_g = 1'b1;
+
+        //line7
+        else if (((nghost_x < (col_coords[2] + col_size4)) && (nghost_x > (col_coords[2] - player_size))) && 
+                 (nghost_y < (row_coords[3] + width)) && (nghost_y > (row_coords[3] - player_size))) collision_g = 1'b1;
+
+        //line8
+        else if (((nghost_x < (col_coords[5] + width)) && (nghost_x > (col_coords[5] - player_size))) && 
+                 (nghost_y < (row_coords[4])) && (nghost_y > (row_coords[4] - row_size - player_size))) collision_g = 1'b1;
+
+        //line9
+        else if (((nghost_x < (col_coords[5] + col_size2)) && (nghost_x > (col_coords[5] - player_size))) && 
+                 (nghost_y < (row_coords[4] + width)) && (nghost_y > (row_coords[4] - player_size))) collision_g = 1'b1;
+
+        //line10
+        else if (((nghost_x < (col_coords[5] + col_size2)) && (nghost_x > (col_coords[5] - player_size))) && 
+                 (nghost_y < (row_coords[2] + width)) && (nghost_y > (row_coords[2] - player_size))) collision_g = 1'b1;
+
+        //line11
+        else if (((nghost_x < (col_coords[5] + width)) && (nghost_x > (col_coords[5] - player_size))) && 
+                 (nghost_y < (row_coords[2])) && (nghost_y > (row_coords[2] - row_size - player_size))) collision_g = 1'b1;
 
     end
 

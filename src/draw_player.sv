@@ -5,6 +5,7 @@ module draw_player
      input logic en_cond,
      input logic collision,
      output logic [1:0] red, green, blue,
+     output logic [15:0] player_x, player_y,
      output logic [15:0] nplayer_x, nplayer_y);
         
     logic [15:0] player_size; // player size
@@ -17,18 +18,18 @@ module draw_player
         nplayer_y = player_y;
 
         if (left) begin
-            nplayer_x = nplayer_x - 16'd3;
+            nplayer_x = player_x - 16'd3;
         end
         else if (right) begin
-            nplayer_x = nplayer_x + 16'd3;
+            nplayer_x = player_x + 16'd3;
         end
         
         //y dir
-        if (up) begin
-            nplayer_y = nplayer_y - 16'd3;
+        else if (up) begin
+            nplayer_y = player_y - 16'd3;
         end
         else if (down) begin
-            nplayer_y = nplayer_y + 16'd3;
+            nplayer_y = player_y + 16'd3;
         end
     end
 
